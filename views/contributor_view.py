@@ -2,7 +2,7 @@ from typing import Tuple
 import pandas as pd
 from pandas import DataFrame
 from _src.settings import ADMIN_USER, MAX_NUM_CONTRIBUTOR
-from models.contributor import Contributor, ContributorDb
+from models.contributor import Contributor, ContributorModel
 from utils.fn_utils import validate_contributor_name, validate_password
 
 
@@ -23,7 +23,7 @@ def add_contributor_view(
         return (False, "Password invalid. Please follow the criteria")
 
     # create an instance of Contributor
-    contributor_db = ContributorDb()
+    contributor_db = ContributorModel()
 
     # check max len of contributor
     current_count = len(contributor_db.get_all())
@@ -47,7 +47,7 @@ def get_contributors_pagination_view(
     page_num: int = 1, page_size: int = 10
 ) -> Tuple[DataFrame, int]:
     """Retrieves all contributors and return DataFrame and total pages."""
-    contributor_db = ContributorDb()
+    contributor_db = ContributorModel()
     contributors_df: pd.DataFrame = contributor_db.get_all()
     paged_df = pd.DataFrame()
     total_pages = 0
@@ -71,7 +71,7 @@ def get_contributors_pagination_view(
 
 def delete_contributor_view(name: str, password: str) -> Tuple[bool, str]:
     """Deletes a contributor by name"""
-    contributor_db = ContributorDb()
+    contributor_db = ContributorModel()
     contributor_data: Contributor = contributor_db.get_by_name_object(name)
     contributor_admin: Contributor = contributor_db.get_by_name_object(ADMIN_USER)
 
@@ -101,7 +101,7 @@ def update_contributor_view(
     new_pwd: str,
 ) -> Tuple[bool, str]:
     """Updates a contributor and displays a success message."""
-    contributor_db = ContributorDb()
+    contributor_db = ContributorModel()
     current_contributor_data: Contributor = contributor_db.get_by_name_object(name)
     contributor_admin: Contributor = contributor_db.get_by_name_object(ADMIN_USER)
 

@@ -75,7 +75,7 @@ class Contributor:
         self._hash_password = value
 
 
-class ContributorDb:
+class ContributorModel:
     """
     Represents a contributor in the database and provides methods for managing contributor data.
     """
