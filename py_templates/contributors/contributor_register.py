@@ -14,7 +14,7 @@ with st.form("add_contributor_form"):
     <small>- At least one uppercase letter</small><br>
     <small>- At least one lowercase letter</small><br>
     <small>- At least one digit</small><br>
-    <small>- At least one special character (!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?)</small>
+    <small>- At least one special character (!@#$%^&*()_+-=[]{};':"\\|,.<>/?)</small>
     """,
         unsafe_allow_html=True,
     )

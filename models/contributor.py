@@ -17,6 +17,65 @@ class ContributorKeys(Enum):
 
 
 class Contributor:
+    """Represents a contributor object (POJO)"""
+
+    def __init__(
+        self, user_id=None, name=None, linkedin_url=None, hash_password=None
+    ) -> None:
+        self.user_id = user_id
+        self.name = name
+        self.linkedin_url = linkedin_url
+        self.hash_password = hash_password
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def user_id(self) -> int:
+        if self._user_id is None:
+            raise ValueError("Contributor Id is Not Available")
+
+        return self._user_id
+
+    @user_id.setter
+    def user_id(self, value: int) -> None:
+        self._user_id = value
+
+    @property
+    def name(self) -> str:
+        if self._name is None:
+            raise ValueError("Contributor Name is Not Available")
+
+        return self._name
+
+    @name.setter
+    def name(self, value: str) -> None:
+        self._name = value
+
+    @property
+    def linkedin_url(self) -> str:
+        if self._linkedin_url is None:
+            raise ValueError("Contributor LinkedIn URL is Not Available")
+
+        return self._linkedin_url
+
+    @linkedin_url.setter
+    def linkedin_url(self, value: str) -> None:
+        self._linkedin_url = value
+
+    @property
+    def hash_password(self) -> str:
+        if self._hash_password is None:
+            raise ValueError("Contributor Hash Password is Not Available")
+
+        return self._hash_password
+
+    @hash_password.setter
+    def hash_password(self, value: str) -> None:
+        self._hash_password = value
+
+
+class ContributorDb:
     """
     Represents a contributor in the database and provides methods for managing contributor data.
     """
@@ -88,10 +147,10 @@ class Contributor:
         if result:
             id, name, linkedin_url, password = result
             contributor_object = Contributor()
-            contributor_object.id = id
+            contributor_object.user_id = id
             contributor_object.name = name
             contributor_object.linkedin_url = linkedin_url
-            contributor_object.password = password
+            contributor_object.hash_password = password
             return contributor_object
         else:
             return None
@@ -117,10 +176,10 @@ class Contributor:
         if result:
             id, name, linkedin_url, password = result
             contributor_object = Contributor()
-            contributor_object.id = id
+            contributor_object.user_id = id
             contributor_object.name = name
             contributor_object.linkedin_url = linkedin_url
-            contributor_object.password = password
+            contributor_object.hash_password = password
             return contributor_object
         else:
             return None
@@ -140,10 +199,29 @@ class Contributor:
             print(f"Error updating contributor: {e}")
             return False
 
-    def delete(self, contributor_id):
-        """Deletes a contributor from the database."""
-        self.cursor.execute("DELETE FROM contributors WHERE id = ?", (contributor_id,))
-        self.conn.commit()
+    def delete(self, contributor_id: int) -> bool:
+        """Deletes a contributor from the database by ID."""
+        try:
+            self.cursor.execute(
+                "DELETE FROM contributors WHERE id = ?", (contributor_id,)
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error deleting contributor by ID: {e}")
+            return False
+
+    def delete_by_name(self, contributor_name: str) -> bool:
+        """Deletes a contributor from the database by name."""
+        try:
+            self.cursor.execute(
+                "DELETE FROM contributors WHERE name = ?", (contributor_name,)
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error deleting contributor by name: {e}")
+            return False
 
     def __del__(self):
         """Closes the database connection when the object is destroyed."""

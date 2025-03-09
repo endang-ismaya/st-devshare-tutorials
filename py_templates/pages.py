@@ -33,12 +33,21 @@ def pages_main():
         title="List",
         icon=":material/groups:",
     )
+    contributor_deletion = st.Page(
+        PY_TEMPLATES_DIR / "contributors" / "contributor_deletion.py",
+        title="Delete",
+        icon=":material/delete:",
+    )
 
     page = st.navigation(
         {
             "Homepage": [homepage, dashboard],
             "Manage Tutrial": [manage],
-            "Manage Contributor": [contrib_register, contributor_list],
+            "Manage Contributor": [
+                contrib_register,
+                contributor_list,
+                contributor_deletion,
+            ],
         },
         expanded=True,
     )

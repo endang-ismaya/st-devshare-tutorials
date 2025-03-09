@@ -8,7 +8,7 @@ from views.contributor_view import get_contributors_pagination_view
 from models.contributor import ContributorKeys as Ckey
 
 
-st.title("Contributor List", anchor=False)
+st.title(":material/user_attributes: Contributor List", anchor=False)
 
 page_num = state.get(Ckey.PAGE_NUM.value, 1)
 
@@ -29,6 +29,7 @@ if not contributors_df.empty:
             on_click=decrease_contributor_page_num,
             type="primary",
             use_container_width=True,
+            icon=":material/arrow_back_ios:",
         )
     else:
         col1.button(
@@ -36,6 +37,7 @@ if not contributors_df.empty:
             type="secondary",
             use_container_width=True,
             disabled=True,
+            icon=":material/arrow_back_ios:",
         )
 
     if page_num < total_pages:
@@ -44,6 +46,7 @@ if not contributors_df.empty:
             on_click=increase_contributor_page_num,
             type="primary",
             use_container_width=True,
+            icon=":material/arrow_forward_ios:",
         )
     else:
         col2.button(
@@ -51,6 +54,7 @@ if not contributors_df.empty:
             type="secondary",
             use_container_width=True,
             disabled=True,
+            icon=":material/arrow_forward_ios:",
         )
 
 else:

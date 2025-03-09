@@ -24,6 +24,10 @@ MAX_NUM_CONTRIBUTOR = 50
 # tutorials
 MAX_NUM_TUTORIALS = 600
 
+# admin user name
+ADMIN_USER = "endangismaya"
+
+# messages
 WELCOME_MESSAGES = {
     "English": "Welcome",
     "Spanish": "Bienvenido",
