@@ -28,12 +28,17 @@ def pages_main():
         title="Register",
         icon=":material/person_add:",
     )
+    contributor_list = st.Page(
+        PY_TEMPLATES_DIR / "contributors" / "contributor_list.py",
+        title="List",
+        icon=":material/groups:",
+    )
 
     page = st.navigation(
         {
             "Homepage": [homepage, dashboard],
             "Manage Tutrial": [manage],
-            "Manage Contributor": [contrib_register],
+            "Manage Contributor": [contrib_register, contributor_list],
         },
         expanded=True,
     )

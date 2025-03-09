@@ -1,3 +1,4 @@
+from enum import Enum, auto
 import sqlite3
 from typing import Optional, Union
 import pandas as pd
@@ -5,6 +6,14 @@ from pandas import DataFrame
 import bcrypt
 
 from _src.settings import DATABASE_PATH
+
+
+class ContributorKeys(Enum):
+    def _generate_next_value_(name, start, count, last_values):
+        return f"CONTRIBUTOR__{str(name).upper()}"
+
+    PAGE_NUM = auto()
+    PAGE_SIZE = auto()
 
 
 class Contributor:

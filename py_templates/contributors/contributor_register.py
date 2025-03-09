@@ -19,6 +19,6 @@ with st.form("add_contributor_form"):
         else:
             is_created, msg = add_contributor_view(name, linkedin_url, password)
             if is_created:
-                st.success(msg)
+                st.toast(msg, icon="🎉")
             else:
-                st.error(msg)
+                st.toast(msg, icon="😭")

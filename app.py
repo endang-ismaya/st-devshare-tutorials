@@ -5,6 +5,7 @@ Main Program
 import streamlit as st
 from streamlit import session_state as state
 from py_templates.pages import pages_main
+from models.contributor import ContributorKeys as Ckey
 
 st.set_page_config(
     page_title="YouTube DevShare Tutorials!",
@@ -15,8 +16,9 @@ st.set_page_config(
 
 
 # app initial state
-if all(key not in state.keys() for key in ()):
-    pass
+if all(key not in state.keys() for key in (Ckey.PAGE_NUM.value,)):
+    state[Ckey.PAGE_NUM.value] = 1
+
 
 # running page with navigation
 pages_main()
