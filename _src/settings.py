@@ -12,3 +12,6 @@ DEBUG = True
 
 # database path
 DATABASES = BASE_DIR / "db" / "youtube_tutorials.db"
+
+# py template directory
+PY_TEMPLATES_DIR = BASE_DIR / "py_templates"
