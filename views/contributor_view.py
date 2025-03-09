@@ -3,7 +3,7 @@ import pandas as pd
 from pandas import DataFrame
 from _src.settings import MAX_NUM_CONTRIBUTOR
 from models.contributor import Contributor
-from utils.fn_utils import validate_contributor_name
+from utils.fn_utils import validate_contributor_name, validate_password
 
 
 def add_contributor_view(
@@ -11,9 +11,16 @@ def add_contributor_view(
 ) -> Tuple[bool, str]:
     """Adds a new contributor to the database"""
 
-    # cheking names
+    # validate name
     if not validate_contributor_name(name):
         return False, "Contributor's name is not allowed!"
+
+    if len(name) <= 4:
+        return False, "Contributor's name is too short!"
+
+    # validate password
+    if not validate_password(password):
+        return (False, "Password invalid. Please follow the criteria")
 
     # create an instance of Contributor
     contributor = Contributor()
@@ -31,9 +38,9 @@ def add_contributor_view(
     # create new contributor
     is_created = contributor.add(name, linkedin_url, password)
     if is_created:
-        return True, "Contributor added successfully"
+        return True, "Contributor has been succesfully registered."
     else:
-        return False, "Failed to add contributor"
+        return False, "Failed to register contributor"
 
 
 def get_contributors_pagination_view(
