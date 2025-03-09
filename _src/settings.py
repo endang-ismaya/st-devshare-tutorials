@@ -23,3 +23,45 @@ MAX_NUM_CONTRIBUTOR = 50
 
 # tutorials
 MAX_NUM_TUTORIALS = 600
+
+WELCOME_MESSAGES = {
+    "English": "Welcome",
+    "Spanish": "Bienvenido",
+    "French": "Bienvenue",
+    "German": "Willkommen",
+    "Japanese": "ようこそ (Yōkoso)",
+    "Chinese (Simplified)": "欢迎 (Huānyíng)",
+    "Arabic": "أهلاً وسهلاً (ʾahlan wa-sahlan)",
+    "Hindi": "स्वागत (Svāgat)",
+    "Russian": "Добро пожаловать (Dobro pozhalovat')",
+    "Portuguese": "Bem-vindo",
+    "Italian": "Benvenuto",
+    "Korean": "환영합니다 (Hwan-yeonghamnida)",
+    "Swahili": "Karibu",
+    "Dutch": "Welkom",
+    "Swedish": "Välkommen",
+    "Turkish": "Hoş geldiniz",
+    "Vietnamese": "Chào mừng",
+    "Indonesian": "Selamat datang",
+}
+
+THANK_YOU_MESSAGES = {
+    "English": "Thank You",
+    "Spanish": "Gracias",
+    "French": "Merci",
+    "German": "Danke",
+    "Japanese": "ありがとうございます (Arigatō gozaimasu)",
+    "Chinese (Simplified)": "谢谢 (Xièxie)",
+    "Arabic": "شكراً (Shukran)",
+    "Hindi": "धन्यवाद (Dhanyavād)",
+    "Russian": "Спасибо (Spasibo)",
+    "Portuguese": "Obrigado",
+    "Italian": "Grazie",
+    "Korean": "감사합니다 (Gamsahamnida)",
+    "Swahili": "Asante",
+    "Dutch": "Dank u",
+    "Swedish": "Tack",
+    "Turkish": "Teşekkür ederim",
+    "Vietnamese": "Cảm ơn",
+    "Indonesian": "Terima kasih",
+}

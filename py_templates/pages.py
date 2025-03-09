@@ -1,5 +1,5 @@
 import streamlit as st
-from _src.settings import PY_TEMPLATES_DIR
+from _src.settings import PY_TEMPLATES_DIR, THANK_YOU_MESSAGES
 
 
 def pages_main():
@@ -44,6 +44,7 @@ def pages_main():
     )
 
     with st.sidebar:
-        st.header("Welcome!")
+        for message in THANK_YOU_MESSAGES.values():
+            st.markdown(f"**{message}**")
 
     page.run()

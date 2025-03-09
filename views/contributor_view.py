@@ -46,7 +46,7 @@ def add_contributor_view(
 def get_contributors_pagination_view(
     page_num: int = 1, page_size: int = 10
 ) -> Tuple[DataFrame, int]:
-    """Retrieves all contributors and return DataFrame."""
+    """Retrieves all contributors and return DataFrame and total pages."""
     contributor = Contributor()
     contributors_df: pd.DataFrame = contributor.get_all()
     paged_df = pd.DataFrame()
