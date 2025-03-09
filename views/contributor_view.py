@@ -56,6 +56,11 @@ def get_contributors_pagination_view(
         # remove the password column.
         contributors_df = contributors_df.drop("password", axis=1)
 
+        # Create clickable links
+        contributors_df["linkedin_url"] = contributors_df["linkedin_url"].apply(
+            lambda url: f'<a href="{url}" target="_blank">{url}</a>'
+        )
+
         start_idx = (page_num - 1) * page_size
         end_idx = start_idx + page_size
         paged_df = contributors_df.iloc[start_idx:end_idx]
