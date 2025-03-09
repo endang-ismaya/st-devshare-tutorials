@@ -19,3 +19,4 @@ PY_TEMPLATES_DIR = BASE_DIR / "py_templates"
 
 # reserved name
 CONTRIBUTOR_RESERVED_NAMES = ["admin", "superuser", "administrator", "root"]
+MAX_NUM_CONTRIBUTOR = 50

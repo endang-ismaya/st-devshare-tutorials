@@ -1,4 +1,5 @@
 from typing import Tuple
+from _src.settings import MAX_NUM_CONTRIBUTOR
 from models.contributor import Contributor
 from utils.fn_utils import validate_contributor_name
 
@@ -14,6 +15,11 @@ def add_contributor_view(
 
     # create an instance of Contributor
     contributor = Contributor()
+
+    # check max len of contributor
+    current_count = len(contributor.get_all())
+    if current_count >= MAX_NUM_CONTRIBUTOR:
+        return False, f"Maximum number of contributors ({MAX_NUM_CONTRIBUTOR}) reached."
 
     # check if contributor exists
     existing_contributor = contributor.get_by_name_object(name=name)
