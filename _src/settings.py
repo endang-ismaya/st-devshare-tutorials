@@ -12,7 +12,7 @@ APP_VERSION = "1.0.0"
 DEBUG = True
 
 # database path
-DATABASES = BASE_DIR / "db" / "youtube_tutorials.db"
+DATABASE_PATH = BASE_DIR / "db" / "youtube_tutorials.db"
 
 # py template directory
 PY_TEMPLATES_DIR = BASE_DIR / "py_templates"
