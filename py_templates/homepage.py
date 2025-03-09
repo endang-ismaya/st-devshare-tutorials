@@ -2,7 +2,7 @@ import streamlit as st
 
 from _src.settings import APP_VERSION
 
-st.title(":material/youtube_activity:  YouTube DevShare Tutorials!")
+st.title(":material/youtube_activity:  YouTube DevShare Tutorials!", anchor=False)
 
 
 st.write(
@@ -12,7 +12,7 @@ st.write(
     """
 )
 
-st.header("Why DevShare Tutorials?")
+st.header("Why DevShare Tutorials?", anchor=False)
 
 st.markdown(
     """
@@ -23,17 +23,18 @@ st.markdown(
     """
 )
 
-st.subheader("How to Contribute:")
+st.subheader("How to Contribute:", anchor=False)
 
 st.write(
     """
-    1.  Use the "Add Tutorial" section to submit your favorite YouTube programming tutorials.
-    2.  Provide the tutorial title, channel, playlist (if applicable), and a brief description.
-    3.  Mention your name or email as a contributor to get credit for your submission.
+    1.  You need to register as a contributor to contribute to the app. Use the "Register" on "Manage Contributor"
+    2.  Use the "Add Tutorial" section to submit your favorite YouTube programming tutorials.
+    3.  Provide the tutorial title, channel, playlist (if applicable), and a brief description.
+    4.  Mention your name or email as a contributor to get credit for your submission.
     """
 )
 
-st.subheader("Explore and Learn:")
+st.subheader("Explore and Learn:", anchor=False)
 
 st.write(
     """

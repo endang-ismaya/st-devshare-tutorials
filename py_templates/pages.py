@@ -22,10 +22,18 @@ def pages_main():
         icon=":material/settings:",
     )
 
+    # Contributor
+    contrib_register = st.Page(
+        PY_TEMPLATES_DIR / "contributors" / "contributor_register.py",
+        title="Register",
+        icon=":material/person_add:",
+    )
+
     page = st.navigation(
         {
             "Homepage": [homepage, dashboard],
             "Manage Tutrial": [manage],
+            "Manage Contributor": [contrib_register],
         },
         expanded=True,
     )

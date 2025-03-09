@@ -43,9 +43,10 @@ class Contributor:
     def add(self, name: str, linkedin_url: str, password: str) -> bool:
         """Adds a new contributor to the database."""
         try:
+            h_password = self.hash_password(password)
             self.cursor.execute(
                 "INSERT INTO contributors (name, linkedin_url, password) VALUES (?, ?, ?)",
-                (name, linkedin_url, password),
+                (name, linkedin_url, h_password),
             )
             self.conn.commit()
             return True
@@ -88,7 +89,9 @@ class Contributor:
 
     def get_by_name(self, name: str) -> Union[dict, None]:
         """Retrieves a contributor by their name."""
-        self.cursor.execute("SELECT * FROM contributors WHERE name = ?", (name,))
+        self.cursor.execute(
+            "SELECT * FROM contributors WHERE LOWER(name) = LOWER(?)", (name,)
+        )
         result = self.cursor.fetchone()
         if result:
             columns = [description[0] for description in self.cursor.description]
@@ -98,7 +101,9 @@ class Contributor:
 
     def get_by_name_object(self, name: str) -> Optional["Contributor"]:
         """Retrieves a contributor by their name as a Contributor object."""
-        self.cursor.execute("SELECT * FROM contributors WHERE name = ?", (name,))
+        self.cursor.execute(
+            "SELECT * FROM contributors WHERE LOWER(name) = LOWER(?)", (name,)
+        )
         result = self.cursor.fetchone()
         if result:
             id, name, linkedin_url, password = result
