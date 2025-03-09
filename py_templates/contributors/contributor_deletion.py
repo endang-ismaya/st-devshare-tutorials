@@ -19,7 +19,7 @@ password = st.text_input(
     type="password",
 )
 
-st.warning("Are you sure you want to delete? there-is-no-going-back!!!")
+st.warning("Are you sure you want to delete? This process cannot be undone.")
 if st.button(
     label="Delete Contributor",
     key="BTN_CONTRIBUTOR_DELETE",
