@@ -9,7 +9,7 @@ with st.form("add_contributor_form"):
     password = st.text_input("Password", type="password")  # Password input
     st.markdown(
         """
-    <small>Validates a password based on the following criteria:</small><br>
+    <small>New Password should meet the following criteria:</small><br>
     <small>- Minimum length of 8 characters</small><br>
     <small>- At least one uppercase letter</small><br>
     <small>- At least one lowercase letter</small><br>

@@ -38,6 +38,11 @@ def pages_main():
         title="Delete",
         icon=":material/delete:",
     )
+    contributor_edit = st.Page(
+        PY_TEMPLATES_DIR / "contributors" / "contributor_edit.py",
+        title="Edit",
+        icon=":material/edit_note:",
+    )
 
     page = st.navigation(
         {
@@ -47,6 +52,7 @@ def pages_main():
                 contrib_register,
                 contributor_list,
                 contributor_deletion,
+                contributor_edit,
             ],
         },
         expanded=True,

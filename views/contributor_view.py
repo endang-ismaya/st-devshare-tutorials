@@ -91,3 +91,36 @@ def delete_contributor_view(name: str, password: str) -> Tuple[bool, str]:
         return False, "Incorrect name and/or password"
 
     return False, f"Contributor '{name}' not found."
+
+
+def update_contributor_view(
+    name: str,
+    current_pwd: str,
+    new_name: str,
+    new_linkedin_url: str,
+    new_pwd: str,
+) -> Tuple[bool, str]:
+    """Updates a contributor and displays a success message."""
+    contributor_db = ContributorDb()
+    current_contributor_data: Contributor = contributor_db.get_by_name_object(name)
+    contributor_admin: Contributor = contributor_db.get_by_name_object(ADMIN_USER)
+
+    if current_contributor_data:
+        # check password
+        if contributor_db.check_password(
+            password=current_pwd, hashed_password=current_contributor_data.hash_password
+        ) or contributor_db.check_password(
+            password=current_pwd, hashed_password=contributor_admin.hash_password
+        ):
+            # validate new password
+            if not validate_password(new_pwd):
+                return (False, "Password invalid. Please follow the criteria")
+
+            contributor_id = current_contributor_data.user_id
+            contributor_db.update(contributor_id, new_name, new_linkedin_url, new_pwd)
+
+            return True, f"Contributor '{name}' has been updated successfully"
+
+        return False, "Incorrect name and/or current password"
+
+    return False, f"Contributor '{name}' not found."

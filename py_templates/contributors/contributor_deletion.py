@@ -6,7 +6,7 @@ st.title(":material/delete: Contributor Deletion", anchor=False)
 
 name = st.text_input(
     label="Contributor Name",
-    key="TXT_CONTRIBUTOR_NAME",
+    key="TXT_CONTRIBUTOR_NAME_DELETE",
     help="Name should be case-sensitive!",
 )
 st.markdown(
@@ -15,7 +15,7 @@ st.markdown(
 )
 password = st.text_input(
     label="Contributor Password",
-    key="TXT_CONTRIBUTOR_PASSWORD",
+    key="TXT_CONTRIBUTOR_PASSWORD_DELETE",
     type="password",
 )
 
@@ -26,11 +26,14 @@ if st.button(
     type="primary",
     icon=":material/delete:",
 ):
-    is_ok_to_del, msg = delete_contributor_view(name, password)
-    if is_ok_to_del:
-        st.success(msg)
-    else:
-        st.error(msg)
+    if name and password:
+        is_ok_to_del, msg = delete_contributor_view(name, password)
+        if is_ok_to_del:
+            st.success(msg)
+        else:
+            st.error(msg)
 
-    time.sleep(1)
-    st.rerun()
+        time.sleep(1)
+        st.rerun()
+    else:
+        st.error("Name and Password are required.")
