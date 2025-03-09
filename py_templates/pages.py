@@ -3,11 +3,17 @@ from _src.settings import PY_TEMPLATES_DIR
 
 
 def pages_main():
+    homepage = st.Page(
+        PY_TEMPLATES_DIR / "homepage.py",
+        title="Homepage",
+        icon=":material/home:",
+        default=True,
+    )
+
     dashboard = st.Page(
         PY_TEMPLATES_DIR / "dashboard.py",
         title="Dashboard",
         icon=":material/browse_activity:",
-        default=True,
     )
 
     manage = st.Page(
@@ -18,7 +24,7 @@ def pages_main():
 
     page = st.navigation(
         {
-            "Homepage": [dashboard],
+            "Homepage": [homepage, dashboard],
             "Manage Tutrial": [manage],
         },
         expanded=True,
