@@ -1,6 +1,7 @@
-# YouTube Programming Tutorial Tracker
+# YouTube DevShare Tutorials!
 
-This is a Streamlit application that allows you to track your progress through YouTube programming tutorials. It uses SQLite3 for data storage, providing a simple and efficient way to manage your learning resources.
+This is a community-driven platform where developers share their favorite YouTube programming tutorials.
+Contribute your knowledge and discover valuable resources to enhance your coding skills!
 
 ## Features
 
@@ -15,8 +16,9 @@ This is a Streamlit application that allows you to track your progress through Y
 
 ### Prerequisites
 
-- Python 3.13
-- pip (Python package installer)
+- Python 3.13.1
+- Streamlit v1.43.1
+- SQLite3
 
 ### Installation
 

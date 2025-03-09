@@ -1,38 +1,46 @@
-# _src/settings/home.py (or wherever your PY_TEMPLATES_DIR points)
-
 import streamlit as st
 
-st.title(":material/youtube_activity: YouTube Programming Tutorial Tracker!")
+st.title(":material/youtube_activity:  YouTube DevShare Tutorials!")
+
 
 st.write(
     """
-    This application is designed to help you organize and track your progress through YouTube programming tutorials. 
-    Whether you're learning a new language, framework, or concept, this tool will keep you on top of your studies.
+    This is a community-driven platform where developers share their favorite YouTube programming tutorials. 
+    Contribute your knowledge and discover valuable resources to enhance your coding skills!
     """
 )
 
-st.header("Key Features:")
+st.header("Why DevShare Tutorials?")
 
 st.markdown(
     """
-    * **Add Tutorials:** Easily input tutorial details like title, channel, playlist, and status.
-    * **Track Progress:** Update the status of your tutorials as you move from 'To Watch' to 'Completed'.
-    * **Search and Filter:** Quickly find specific tutorials.
-    * **Organize Your Learning:** Keep all your learning resources in one place.
-    * **Object Oriented Data:** The application can return database results as python objects.
+    * **Community-Curated:** Discover tutorials recommended by fellow developers.
+    * **Share Your Knowledge:** Contribute your favorite tutorials to help others.
+    * **Diverse Topics:** Find tutorials covering a wide range of programming languages and technologies.
+    * **Collaborative Learning:** Learn together and support each other's growth.
     """
 )
 
-st.subheader("How to Use:")
+st.subheader("How to Contribute:")
 
 st.write(
     """
-    1.  Use the navigation menu on the left to explore different sections of the app.
-    2.  Add new tutorials to your list using the 'Add Tutorial' section.
-    3.  Update the status of tutorials as you progress.
-    4.  Search for tutorials using the search functionality.
+    1.  Use the "Add Tutorial" section to submit your favorite YouTube programming tutorials.
+    2.  Provide the tutorial title, channel, playlist (if applicable), and a brief description.
+    3.  Mention your name or email as a contributor to get credit for your submission.
     """
 )
+
+st.subheader("Explore and Learn:")
+
+st.write(
+    """
+    * Browse the "Tutorial List" to find valuable resources.
+    * Use the search functionality to find tutorials on specific topics.
+    """
+)
+
+st.write("Let's learn and grow together!")
 
 st.write(
     ":material/sentiment_very_satisfied: Happy Learning! :material/sentiment_very_satisfied:"
