@@ -1,5 +1,7 @@
 import streamlit as st
 
+from _src.settings import APP_VERSION
+
 st.title(":material/youtube_activity:  YouTube DevShare Tutorials!")
 
 
@@ -49,10 +51,11 @@ st.write(
 
 # FOOTER
 st.divider()
-cola, colb, col3 = st.columns(spec=3)
+cola, colb, colc, cold = st.columns(spec=4)
 cola.write("Made with patience and 💝")
 colb.write(f"Streamlit v{st.__version__}")
-col3.markdown(
+colc.write(f"App Version: {APP_VERSION}")
+cold.markdown(
     "<p style='text-align: right;'>endang.ismaya@2025</p>",
     unsafe_allow_html=True,
 )
