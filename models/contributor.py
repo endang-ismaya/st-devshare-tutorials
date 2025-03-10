@@ -19,16 +19,14 @@ class ContributorKeys(Enum):
 class Contributor:
     """Represents a contributor object (POJO)"""
 
-    def __init__(
-        self, user_id=None, name=None, linkedin_url=None, hash_password=None
-    ) -> None:
+    def __init__(self, user_id, username, linkedin_url, hash_password) -> None:
         self.user_id = user_id
-        self.name = name
+        self.username = username
         self.linkedin_url = linkedin_url
         self.hash_password = hash_password
 
     def __str__(self):
-        return self.name
+        return self.username
 
     @property
     def user_id(self) -> int:
@@ -42,15 +40,15 @@ class Contributor:
         self._user_id = value
 
     @property
-    def name(self) -> str:
-        if self._name is None:
+    def username(self) -> str:
+        if self._username is None:
             raise ValueError("Contributor Name is Not Available")
 
-        return self._name
+        return self._username
 
-    @name.setter
-    def name(self, value: str) -> None:
-        self._name = value
+    @username.setter
+    def username(self, value: str) -> None:
+        self._username = value
 
     @property
     def linkedin_url(self) -> str:
@@ -91,7 +89,7 @@ class ContributorModel:
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS contributors (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT,
+                username TEXT UNIQUE,
                 linkedin_url TEXT,
                 password TEXT
             )
@@ -108,13 +106,13 @@ class ContributorModel:
         """Check is password match with hashed password."""
         return bcrypt.checkpw(password.encode("utf-8"), hashed_password.encode("utf-8"))
 
-    def add(self, name: str, linkedin_url: str, password: str) -> bool:
+    def add(self, username: str, linkedin_url: str, password: str) -> bool:
         """Adds a new contributor to the database."""
         try:
             h_password = self.hash_password(password)
             self.cursor.execute(
-                "INSERT INTO contributors (name, linkedin_url, password) VALUES (?, ?, ?)",
-                (name, linkedin_url, h_password),
+                "INSERT INTO contributors (username, linkedin_url, password) VALUES (?, ?, ?)",
+                (username, linkedin_url, h_password),
             )
             self.conn.commit()
             return True
@@ -145,20 +143,20 @@ class ContributorModel:
         )
         result = self.cursor.fetchone()
         if result:
-            id, name, linkedin_url, password = result
+            id, username, linkedin_url, password = result
             contributor_object = Contributor()
             contributor_object.user_id = id
-            contributor_object.name = name
+            contributor_object.username = username
             contributor_object.linkedin_url = linkedin_url
             contributor_object.hash_password = password
             return contributor_object
         else:
             return None
 
-    def get_by_name(self, name: str) -> Union[dict, None]:
+    def get_by_username(self, username: str) -> Union[dict, None]:
         """Retrieves a contributor by their name."""
         self.cursor.execute(
-            "SELECT * FROM contributors WHERE LOWER(name) = LOWER(?)", (name,)
+            "SELECT * FROM contributors WHERE LOWER(username) = LOWER(?)", (username,)
         )
         result = self.cursor.fetchone()
         if result:
@@ -167,17 +165,17 @@ class ContributorModel:
         else:
             return None
 
-    def get_by_name_object(self, name: str) -> Optional["Contributor"]:
+    def get_by_username_object(self, username: str) -> Optional["Contributor"]:
         """Retrieves a contributor by their name as a Contributor object."""
         self.cursor.execute(
-            "SELECT * FROM contributors WHERE LOWER(name) = LOWER(?)", (name,)
+            "SELECT * FROM contributors WHERE LOWER(username) = LOWER(?)", (username,)
         )
         result = self.cursor.fetchone()
         if result:
-            id, name, linkedin_url, password = result
+            id, username, linkedin_url, password = result
             contributor_object = Contributor()
             contributor_object.user_id = id
-            contributor_object.name = name
+            contributor_object.username = username
             contributor_object.linkedin_url = linkedin_url
             contributor_object.hash_password = password
             return contributor_object
@@ -185,13 +183,13 @@ class ContributorModel:
             return None
 
     def update(
-        self, contributor_id: int, name: str, linkedin_url: str, password: str
+        self, contributor_id: int, username: str, linkedin_url: str, password: str
     ) -> bool:
         """Updates an existing contributor's information."""
         try:
             self.cursor.execute(
-                "UPDATE contributors SET name = ?, linkedin_url = ?, password = ? WHERE id = ?",
-                (name, linkedin_url, password, contributor_id),
+                "UPDATE contributors SET username = ?, linkedin_url = ?, password = ? WHERE id = ?",
+                (username, linkedin_url, password, contributor_id),
             )
             self.conn.commit()
             return True
@@ -211,16 +209,16 @@ class ContributorModel:
             print(f"Error deleting contributor by ID: {e}")
             return False
 
-    def delete_by_name(self, contributor_name: str) -> bool:
+    def delete_by_username(self, username: str) -> bool:
         """Deletes a contributor from the database by name."""
         try:
             self.cursor.execute(
-                "DELETE FROM contributors WHERE name = ?", (contributor_name,)
+                "DELETE FROM contributors WHERE username = ?", (username,)
             )
             self.conn.commit()
             return True
         except Exception as e:
-            print(f"Error deleting contributor by name: {e}")
+            print(f"Error deleting contributor by username: {e}")
             return False
 
     def __del__(self):

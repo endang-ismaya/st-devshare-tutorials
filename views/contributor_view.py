@@ -1,42 +1,35 @@
 from typing import Tuple
 import pandas as pd
 from pandas import DataFrame
-from _src.settings import ADMIN_USER, MAX_NUM_CONTRIBUTOR
+from _src.settings import ADMIN_USER
 from models.contributor import Contributor, ContributorModel
-from utils.fn_utils import validate_contributor_name, validate_password
+from utils.validation import validate_contributor, validate_password, validate_username
 
 
 def add_contributor_view(
-    name: str, linkedin_url: str, password: str
+    username: str, linkedin_url: str, password: str
 ) -> Tuple[bool, str]:
     """Adds a new contributor to the database"""
 
-    # validate name
-    if not validate_contributor_name(name):
-        return False, "Contributor's name is not allowed!"
-
-    if len(name) <= 4:
-        return False, "Contributor's name is too short!"
+    # validating username
+    is_valid, msg = validate_username(username)
+    if not is_valid:
+        return False, msg
 
     # validate password
     if not validate_password(password):
         return (False, "Password invalid. Please follow the criteria")
 
+    # validate contributor
     # create an instance of Contributor
     contributor_db = ContributorModel()
 
-    # check max len of contributor
-    current_count = len(contributor_db.get_all())
-    if current_count >= MAX_NUM_CONTRIBUTOR:
-        return False, f"Maximum number of contributors ({MAX_NUM_CONTRIBUTOR}) reached."
-
-    # check if contributor exists
-    existing_contributor = contributor_db.get_by_name_object(name=name)
-    if existing_contributor:
-        return False, "Contributor's name already exists"
+    is_valid, msg = validate_contributor(username, contributor_db)
+    if not is_valid:
+        return False, msg
 
     # create new contributor
-    is_created = contributor_db.add(name, linkedin_url, password)
+    is_created = contributor_db.add(username, linkedin_url, password)
     if is_created:
         return True, "Contributor has been succesfully registered."
     else:
@@ -69,11 +62,11 @@ def get_contributors_pagination_view(
     return paged_df, total_pages
 
 
-def delete_contributor_view(name: str, password: str) -> Tuple[bool, str]:
-    """Deletes a contributor by name"""
+def delete_contributor_view(username: str, password: str) -> Tuple[bool, str]:
+    """Deletes a contributor by username"""
     contributor_db = ContributorModel()
-    contributor_data: Contributor = contributor_db.get_by_name_object(name)
-    contributor_admin: Contributor = contributor_db.get_by_name_object(ADMIN_USER)
+    contributor_data: Contributor = contributor_db.get_by_username_object(username)
+    contributor_admin: Contributor = contributor_db.get_by_username_object(ADMIN_USER)
 
     if contributor_data:
         # check password
@@ -82,28 +75,30 @@ def delete_contributor_view(name: str, password: str) -> Tuple[bool, str]:
         ) or contributor_db.check_password(
             password=password, hashed_password=contributor_admin.hash_password
         ):
-            is_deleted = contributor_db.delete_by_name(contributor_data.name)
+            is_deleted = contributor_db.delete_by_username(contributor_data.username)
             if is_deleted:
-                return True, f"Contributor '{name}' has been deleted successfully"
+                return True, f"Contributor '{username}' has been deleted successfully"
 
             return False, "Error when deleting contributor"
 
-        return False, "Incorrect name and/or password"
+        return False, "Incorrect username and/or password"
 
-    return False, f"Contributor '{name}' not found."
+    return False, f"Contributor '{username}' not found."
 
 
 def update_contributor_view(
-    name: str,
+    username: str,
     current_pwd: str,
-    new_name: str,
+    new_username: str,
     new_linkedin_url: str,
     new_pwd: str,
 ) -> Tuple[bool, str]:
     """Updates a contributor and displays a success message."""
     contributor_db = ContributorModel()
-    current_contributor_data: Contributor = contributor_db.get_by_name_object(name)
-    contributor_admin: Contributor = contributor_db.get_by_name_object(ADMIN_USER)
+    current_contributor_data: Contributor = contributor_db.get_by_username_object(
+        username
+    )
+    contributor_admin: Contributor = contributor_db.get_by_username_object(ADMIN_USER)
 
     if current_contributor_data:
         # check password
@@ -117,10 +112,12 @@ def update_contributor_view(
                 return (False, "Password invalid. Please follow the criteria")
 
             contributor_id = current_contributor_data.user_id
-            contributor_db.update(contributor_id, new_name, new_linkedin_url, new_pwd)
+            contributor_db.update(
+                contributor_id, new_username, new_linkedin_url, new_pwd
+            )
 
-            return True, f"Contributor '{name}' has been updated successfully"
+            return True, f"Contributor '{username}' has been updated successfully"
 
         return False, "Incorrect name and/or current password"
 
-    return False, f"Contributor '{name}' not found."
+    return False, f"Contributor '{username}' not found."

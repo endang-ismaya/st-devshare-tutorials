@@ -4,12 +4,18 @@ from views.contributor_view import add_contributor_view
 st.title("Contributor Registration", anchor=False)
 
 with st.form("add_contributor_form"):
-    name = st.text_input("Name")
+    username = st.text_input("Username")
+    st.markdown(
+        "<small>Username should meet the following criteria:</small><br>"
+        "<small >- Lowercase alphabets and underscores only</small><br>"
+        "<small >- Minimum length of 5 characters</small>",
+        unsafe_allow_html=True,
+    )
     linkedin_url = st.text_input("LinkedIn URL (Optional)")
     password = st.text_input("Password", type="password")  # Password input
     st.markdown(
         """
-    <small>New Password should meet the following criteria:</small><br>
+    <small>Password should meet the following criteria:</small><br>
     <small>- Minimum length of 8 characters</small><br>
     <small>- At least one uppercase letter</small><br>
     <small>- At least one lowercase letter</small><br>
@@ -23,10 +29,10 @@ with st.form("add_contributor_form"):
     )
 
     if submit_button:
-        if not name or not password:
+        if not username or not password:
             st.error("Name and password are required fields.")
         else:
-            is_created, msg = add_contributor_view(name, linkedin_url, password)
+            is_created, msg = add_contributor_view(username, linkedin_url, password)
             if is_created:
                 st.toast(msg, icon="🎉")
             else:

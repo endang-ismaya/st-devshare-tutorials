@@ -18,7 +18,7 @@ DATABASE_PATH = BASE_DIR / "youtube_tutorials.db"
 PY_TEMPLATES_DIR = BASE_DIR / "py_templates"
 
 # reserved name
-CONTRIBUTOR_RESERVED_NAMES = ["admin", "superuser", "administrator", "root"]
+CONTRIBUTOR_RESERVED_USERNAMES = ["admin", "superuser", "administrator", "root"]
 MAX_NUM_CONTRIBUTOR = 50
 
 # tutorials
