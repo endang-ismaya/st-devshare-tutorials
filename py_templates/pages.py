@@ -17,12 +17,6 @@ def pages_main():
         default=True,
     )
 
-    manage = st.Page(
-        PY_TEMPLATES_DIR / "manage.py",
-        title="Manage",
-        icon=":material/settings:",
-    )
-
     dashboard = st.Page(
         PY_TEMPLATES_DIR / "dashboard.py",
         title="Dashboard",
@@ -51,9 +45,16 @@ def pages_main():
         icon=":material/edit_note:",
     )
 
+    # Tutorial
+    tutorial_add = st.Page(
+        PY_TEMPLATES_DIR / "tutorials" / "add_tutorial.py",
+        title="Add Tutorial",
+        icon=":material/add_circle:",
+    )
+
     page_data = {
         "Homepage": [homepage],
-        "Manage Tutorial": [manage],
+        "Manage Tutorial": [],
         "Manage Contributor": [contrib_register],
     }
 
@@ -63,6 +64,7 @@ def pages_main():
         page_data["Manage Contributor"].append(contributor_edit)
         page_data["Manage Contributor"].append(contributor_deletion)
         page_data["Manage Contributor"].remove(contrib_register)
+        page_data["Manage Tutorial"].append(tutorial_add)
 
     page = st.navigation(
         page_data,

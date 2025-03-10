@@ -1,8 +1,13 @@
 import re
 from streamlit import session_state as state
 from typing import Tuple
-from _src.settings import CONTRIBUTOR_RESERVED_USERNAMES, MAX_NUM_CONTRIBUTOR
+from _src.settings import (
+    CONTRIBUTOR_RESERVED_USERNAMES,
+    MAX_NUM_CONTRIBUTOR,
+    MAX_NUM_TUTORIALS,
+)
 from models.contributor import ContributorModel, ContributorKeys as Ckey
+from models.tutorial import TutorialModel
 
 
 def validate_contributor_username(name: str) -> bool:
@@ -22,12 +27,14 @@ def validate_password(password: str) -> bool:
     - At least one uppercase letter
     - At least one lowercase letter
     - At least one digit
-    - At least one special character (!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?)
+    - At least one special character
     """
     if len(password) < 8:
         return False
 
-    pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]).+$"
+    pattern = (
+        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+-=\[\]{};':\"\\|,.<>\/?]).+$"
+    )
     return re.match(pattern, password) is not None
 
 
@@ -67,7 +74,7 @@ def validate_contributor(
 
     # check max len of contributor
     current_count = len(contributor_db.get_all())
-    if current_count > MAX_NUM_CONTRIBUTOR:
+    if current_count >= MAX_NUM_CONTRIBUTOR:
         return False, f"Maximum number of contributors ({MAX_NUM_CONTRIBUTOR}) reached."
 
     # check if contributor exists
@@ -80,3 +87,19 @@ def validate_contributor(
 
 def is_authenticated() -> bool:
     return state[Ckey.USER_DATA.value] is not None
+
+
+def validate_adding_tutorial(
+    title: str, channel_name: str, tutorial_model: TutorialModel
+) -> Tuple[bool, str]:
+    # check max len of tutorial
+    current_count = len(tutorial_model.get_all())
+    if current_count >= MAX_NUM_TUTORIALS:
+        return False, f"Maximum number of tutorials ({MAX_NUM_TUTORIALS}) reached."
+
+    # check if combine title and channel_name exists
+    is_exist = tutorial_model.title_channel_exists(title, channel_name)
+    if is_exist:
+        return False, "Tutorial title with channel name already exists!"
+
+    return True, "Tutorial is valid"

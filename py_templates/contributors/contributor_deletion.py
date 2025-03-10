@@ -1,13 +1,13 @@
 import streamlit as st
 import time
 
-from streamlit import session_state as state
+from utils.user_util import get_user_obj
 from views.contributor_view import delete_contributor_view, user_logout
-from models.contributor import Contributor, ContributorKeys as Ckey
+from models.contributor import Contributor
 
 st.title(":material/delete: Contributor Deletion", anchor=False)
 
-user: Contributor = state[Ckey.USER_DATA.value]
+user: Contributor = get_user_obj()
 
 if user:
     username = st.text_input(
