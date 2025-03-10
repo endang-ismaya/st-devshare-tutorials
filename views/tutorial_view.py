@@ -2,7 +2,7 @@ from typing import Tuple
 import pandas as pd
 
 from pandas import DataFrame
-from models.contributor import Contributor, ContributorModel
+from models.contributor import ContributorModel
 from models.tutorial import TutorialModel
 from utils.validation import validate_adding_tutorial
 

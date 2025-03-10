@@ -25,7 +25,7 @@ if not tutorials_df.empty:
     if page_num > 1:
         col1.button(
             "Previous Page",
-            on_click=increase_tutorial_page_num,
+            on_click=decrease_tutorial_page_num,
             type="primary",
             use_container_width=True,
             icon=":material/arrow_back_ios:",
@@ -44,7 +44,7 @@ if not tutorials_df.empty:
     if page_num < total_pages:
         col2.button(
             "Next Page",
-            on_click=decrease_tutorial_page_num,
+            on_click=increase_tutorial_page_num,
             type="primary",
             use_container_width=True,
             icon=":material/arrow_forward_ios:",

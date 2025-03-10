@@ -4,6 +4,7 @@ import streamlit as st
 from streamlit import session_state as state
 from _src.settings import DEBUG, PY_TEMPLATES_DIR
 from models.contributor import ContributorKeys as Ckey
+from utils.user_util import get_user_obj
 from utils.validation import is_authenticated
 from views.contributor_view import user_login, user_logout
 
@@ -77,7 +78,8 @@ def pages_main():
     )
 
     with st.sidebar:
-        if state[Ckey.USER_DATA.value] is None:
+        user = get_user_obj()
+        if user is None:
             # show login component
             username = st.text_input("Username")
             password = st.text_input("Password", type="password")
@@ -95,6 +97,7 @@ def pages_main():
                 else:
                     st.error("Username and Password are required")
         else:
+            st.write(f"Welcome, {user.username}!")
             btn_logout = st.button("Logout", type="primary", icon=":material/logout:")
             if btn_logout:
                 user_logout()
