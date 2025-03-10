@@ -1,5 +1,8 @@
 import streamlit as st
+
+from streamlit import session_state as state
 from _src.settings import PY_TEMPLATES_DIR
+from models.contributor import ContributorKeys as Ckey
 
 
 def pages_main():
@@ -59,6 +62,19 @@ def pages_main():
     )
 
     with st.sidebar:
-        pass
+        if state[Ckey.USER_DATA.value] is None:
+            # show login component
+            username = st.text_input("Username")
+            password = st.text_input("Password", type="password")
+            btn_login = st.button("Login", type="primary", icon=":material/login:")
+
+            if btn_login:
+                print(username, password)
+                st.rerun()
+        else:
+            btn_logout = st.button("Logout", type="primary", icon=":material/logout")
+            if btn_logout:
+                state[Ckey.USER_DATA.value] = None
+                st.rerun()
 
     page.run()

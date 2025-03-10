@@ -13,7 +13,7 @@ class ContributorKeys(Enum):
         return f"CONTRIBUTOR__{str(name).upper()}"
 
     PAGE_NUM = auto()
-    PAGE_SIZE = auto()
+    USER_DATA = auto()
 
 
 class Contributor:

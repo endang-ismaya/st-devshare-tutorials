@@ -16,8 +16,15 @@ st.set_page_config(
 
 
 # app initial state
-if all(key not in state.keys() for key in (Ckey.PAGE_NUM.value,)):
+if all(
+    key not in state.keys()
+    for key in (
+        Ckey.PAGE_NUM.value,
+        Ckey.USER_DATA.value,
+    )
+):
     state[Ckey.PAGE_NUM.value] = 1
+    state[Ckey.USER_DATA.value] = None
 
 
 # running page with navigation
