@@ -189,9 +189,10 @@ class ContributorModel:
     ) -> bool:
         """Updates an existing contributor's information."""
         try:
+            h_password = self.hash_password(password)
             self.cursor.execute(
                 "UPDATE contributors SET username = ?, linkedin_url = ?, password = ? WHERE id = ?",
-                (username, linkedin_url, password, contributor_id),
+                (username, linkedin_url, h_password, contributor_id),
             )
             self.conn.commit()
             return True

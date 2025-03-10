@@ -1,10 +1,11 @@
+import time
 import streamlit as st
 
 from streamlit import session_state as state
 from _src.settings import DEBUG, PY_TEMPLATES_DIR
 from models.contributor import ContributorKeys as Ckey
 from utils.validation import is_authenticated
-from views.contributor_view import user_login
+from views.contributor_view import user_login, user_logout
 
 
 def pages_main():
@@ -82,13 +83,16 @@ def pages_main():
                         st.error(msg)
                     else:
                         st.toast(msg)
+                        time.sleep(1)
                         st.rerun()
                 else:
                     st.error("Username and Password are required")
         else:
             btn_logout = st.button("Logout", type="primary", icon=":material/logout:")
             if btn_logout:
-                state[Ckey.USER_DATA.value] = None
+                user_logout()
+                st.toast("Logged out successfully")
+                time.sleep(1)
                 st.rerun()
 
         if DEBUG:

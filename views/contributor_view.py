@@ -68,14 +68,11 @@ def delete_contributor_view(username: str, password: str) -> Tuple[bool, str]:
     """Deletes a contributor by username"""
     contributor_db = ContributorModel()
     contributor_data: Contributor = contributor_db.get_by_username_object(username)
-    contributor_admin: Contributor = contributor_db.get_by_username_object(ADMIN_USER)
 
     if contributor_data:
         # check password
         if contributor_db.check_password(
             password=password, hashed_password=contributor_data.hash_password
-        ) or contributor_db.check_password(
-            password=password, hashed_password=contributor_admin.hash_password
         ):
             is_deleted = contributor_db.delete_by_username(contributor_data.username)
             if is_deleted:
@@ -156,3 +153,7 @@ def user_login(username: str, password: str) -> Tuple[bool, str]:
     state[Ckey.USER_DATA.value] = user
 
     return True, "Login Successful"
+
+
+def user_logout() -> None:
+    state[Ckey.USER_DATA.value] = None
