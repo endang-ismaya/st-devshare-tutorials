@@ -5,11 +5,12 @@ Contribute your knowledge and discover valuable resources to enhance your coding
 
 ## Features
 
-- **Add Tutorials:** Easily add new tutorials with titles, channel names, playlist information, and status (To Watch, Watching, Completed).
+- **Contributor Registration:** A contributor can register with their username and linkedin profile url.
+- **Add Tutorials:** Easily add new tutorials with titles, channel names, video url or playlist url, and a brief description.
 - **View Tutorials:** Browse a list of all your saved tutorials in a table format.
-- **Update Status:** Update the status of tutorials as you progress.
+- **Watch Tutorial:** Watch tutorial directly from the app.
 - **Delete Tutorials:** Remove tutorials that you no longer need.
-- **Search Tutorials:** Search for specific tutorials by title.
+- **Search Tutorials:** Search for specific tutorials by ID.
 - **Object Oriented Data:** The application can return database results as python objects.
 
 ## Getting Started
@@ -25,19 +26,19 @@ Contribute your knowledge and discover valuable resources to enhance your coding
 1.  **Clone the repository (or download the code):**
 
     ```bash
-    git clone [repository_url]
+    git clone https://github.com/endang-ismaya/st-devshare-tutorials.git
     ```
 
 2.  **Navigate to the project directory:**
 
     ```bash
-    cd [project_directory]
+    cd st-devshare-tutorials
     ```
 
 3.  **Install the required packages:**
 
     ```bash
-    pip install streamlit
+    pip install -r requirements.txt
     ```
 
 ### Running the Application
@@ -58,9 +59,9 @@ Contribute your knowledge and discover valuable resources to enhance your coding
 - The database contains a table named `tutorials` with the following columns:
   - `id` (INTEGER, PRIMARY KEY, AUTOINCREMENT)
   - `title` (TEXT)
-  - `channel` (TEXT)
-  - `playlist` (TEXT)
-  - `status` (TEXT)
+  - `channel_name` (TEXT)
+  - `video_url` (TEXT)
+  - `brief_description` (TEXT)
 
 ### Application Structure
 
@@ -70,21 +71,18 @@ The application is structured using a Model-View-Template (MVT) like architectur
 - **views:** A folder contains the application logic (views).
 - **templates:** A folder contains the application views or frontend templates.
 - **app.py:** The main program file.
-- **TutorialObject class:** A python class that represents a single tutorial record.
+- **Tutorial class:** A python class that represents a single tutorial record.
+- **TutorialModel class:** A python class that represents a Tutorial Model for method and properties.
 
 ### Enhancements
 
 Here are some potential enhancements for this application inthe future:
 
-- **Search Functionality:** Improve search capabilities to include searching by channel or playlist.
-- **Playlist Links:** Add clickable links to YouTube playlists.
-- **Detailed View:** Create a detailed view for each tutorial, showing more information.
+- **Search Functionality:** Improve search capabilities to include searching by channel or title.
 - **Error Handling:** Implement more robust error handling for database operations.
 - **Styling:** Improve the app's appearance using Streamlit's styling options.
-- **Video progress:** Add columns for video progress, and current video.
-- **Sorting:** Add the ability to sort the table data.
-- **User Authentication:** Add user authentication to allow multiple users.
-- **Deployment:** Deploy the application to Streamlit Sharing or another hosting platform.
+- **User Authentication:** Add user authentication [permanently] as currently only using session_state.
+- **Learning Path Functionality:** Create a collection of videos for a learning path.
 
 ### Contributing
 
