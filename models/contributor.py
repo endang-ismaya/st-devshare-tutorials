@@ -144,11 +144,12 @@ class ContributorModel:
         result = self.cursor.fetchone()
         if result:
             id, username, linkedin_url, password = result
-            contributor_object = Contributor()
-            contributor_object.user_id = id
-            contributor_object.username = username
-            contributor_object.linkedin_url = linkedin_url
-            contributor_object.hash_password = password
+            contributor_object = Contributor(
+                user_id=id,
+                username=username,
+                linkedin_url=linkedin_url,
+                hash_password=password,
+            )
             return contributor_object
         else:
             return None
@@ -173,11 +174,12 @@ class ContributorModel:
         result = self.cursor.fetchone()
         if result:
             id, username, linkedin_url, password = result
-            contributor_object = Contributor()
-            contributor_object.user_id = id
-            contributor_object.username = username
-            contributor_object.linkedin_url = linkedin_url
-            contributor_object.hash_password = password
+            contributor_object = Contributor(
+                user_id=id,
+                username=username,
+                linkedin_url=linkedin_url,
+                hash_password=password,
+            )
             return contributor_object
         else:
             return None

@@ -1,8 +1,10 @@
-from typing import Tuple
 import pandas as pd
+
+from streamlit import session_state as state
+from typing import Tuple
 from pandas import DataFrame
 from _src.settings import ADMIN_USER
-from models.contributor import Contributor, ContributorModel
+from models.contributor import Contributor, ContributorModel, ContributorKeys as Ckey
 from utils.validation import validate_contributor, validate_password, validate_username
 
 
@@ -121,3 +123,27 @@ def update_contributor_view(
         return False, "Incorrect name and/or current password"
 
     return False, f"Contributor '{username}' not found."
+
+
+def user_login(username: str, password: str) -> Tuple[bool, str]:
+    # create model instance
+    contributor_db = ContributorModel()
+
+    # check if username exists
+    user = contributor_db.get_by_username_object(username)
+
+    if not user:
+        return False, "User not found!."
+
+    # check password
+    is_pwd_ok = contributor_db.check_password(
+        password=password, hashed_password=user.hash_password
+    )
+
+    if not is_pwd_ok:
+        return False, "User or Password Mismatch!"
+
+    # set state
+    state[Ckey.USER_DATA.value] = user
+
+    return True, "Login Successful"

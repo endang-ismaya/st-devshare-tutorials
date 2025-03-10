@@ -1,11 +1,14 @@
 import streamlit as st
 
 from streamlit import session_state as state
-from _src.settings import PY_TEMPLATES_DIR
+from _src.settings import DEBUG, PY_TEMPLATES_DIR
 from models.contributor import ContributorKeys as Ckey
+from utils.validation import is_authenticated
+from views.contributor_view import user_login
 
 
 def pages_main():
+    # unregistered user
     homepage = st.Page(
         PY_TEMPLATES_DIR / "homepage.py",
         title="Homepage",
@@ -13,16 +16,16 @@ def pages_main():
         default=True,
     )
 
-    dashboard = st.Page(
-        PY_TEMPLATES_DIR / "dashboard.py",
-        title="Dashboard",
-        icon=":material/browse_activity:",
-    )
-
     manage = st.Page(
         PY_TEMPLATES_DIR / "manage.py",
         title="Manage",
         icon=":material/settings:",
+    )
+
+    dashboard = st.Page(
+        PY_TEMPLATES_DIR / "dashboard.py",
+        title="Dashboard",
+        icon=":material/browse_activity:",
     )
 
     # Contributor
@@ -47,17 +50,20 @@ def pages_main():
         icon=":material/edit_note:",
     )
 
+    page_data = {
+        "Homepage": [homepage],
+        "Manage Tutorial": [manage],
+        "Manage Contributor": [contrib_register],
+    }
+
+    if is_authenticated():
+        page_data["Homepage"].append(dashboard)
+        page_data["Manage Contributor"].append(contributor_list)
+        page_data["Manage Contributor"].append(contributor_edit)
+        page_data["Manage Contributor"].append(contributor_deletion)
+
     page = st.navigation(
-        {
-            "Homepage": [homepage, dashboard],
-            "Manage Tutrial": [manage],
-            "Manage Contributor": [
-                contrib_register,
-                contributor_list,
-                contributor_deletion,
-                contributor_edit,
-            ],
-        },
+        page_data,
         expanded=True,
     )
 
@@ -69,12 +75,22 @@ def pages_main():
             btn_login = st.button("Login", type="primary", icon=":material/login:")
 
             if btn_login:
-                print(username, password)
-                st.rerun()
+                if username and password:
+                    is_valid, msg = user_login(username, password)
+                    if not is_valid:
+                        st.error(msg)
+                    else:
+                        st.toast(msg)
+                        st.rerun()
+                else:
+                    st.error("Username and Password are required")
         else:
-            btn_logout = st.button("Logout", type="primary", icon=":material/logout")
+            btn_logout = st.button("Logout", type="primary", icon=":material/logout:")
             if btn_logout:
                 state[Ckey.USER_DATA.value] = None
                 st.rerun()
+
+        if DEBUG:
+            st.write(state)
 
     page.run()

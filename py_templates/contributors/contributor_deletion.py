@@ -4,13 +4,13 @@ from views.contributor_view import delete_contributor_view
 
 st.title(":material/delete: Contributor Deletion", anchor=False)
 
-name = st.text_input(
-    label="Contributor Name",
+username = st.text_input(
+    label="Contributor Username",
     key="TXT_CONTRIBUTOR_NAME_DELETE",
     help="Name should be case-sensitive!",
 )
 st.markdown(
-    "<small style='color:red;'>*Name should be case-sensitive</small>",
+    "<small style='color:red;'>*Username should be case-sensitive</small>",
     unsafe_allow_html=True,
 )
 password = st.text_input(
@@ -26,8 +26,8 @@ if st.button(
     type="primary",
     icon=":material/delete:",
 ):
-    if name and password:
-        is_ok_to_del, msg = delete_contributor_view(name, password)
+    if username and password:
+        is_ok_to_del, msg = delete_contributor_view(username, password)
         if is_ok_to_del:
             st.success(msg)
         else:
@@ -36,4 +36,4 @@ if st.button(
         time.sleep(1)
         st.rerun()
     else:
-        st.error("Name and Password are required.")
+        st.error("Username and Password are required.")

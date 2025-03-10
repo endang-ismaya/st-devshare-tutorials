@@ -25,7 +25,7 @@ with st.form("add_contributor_form"):
         unsafe_allow_html=True,
     )
     submit_button = st.form_submit_button(
-        "Add Contributor", type="primary", icon=":material/person_add:"
+        "Register", type="primary", icon=":material/person_add:"
     )
 
     if submit_button:

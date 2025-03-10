@@ -1,7 +1,8 @@
 import re
+from streamlit import session_state as state
 from typing import Tuple
 from _src.settings import CONTRIBUTOR_RESERVED_USERNAMES, MAX_NUM_CONTRIBUTOR
-from models.contributor import ContributorModel
+from models.contributor import ContributorModel, ContributorKeys as Ckey
 
 
 def validate_contributor_username(name: str) -> bool:
@@ -75,3 +76,7 @@ def validate_contributor(
         return False, "Contributor with this username already exists"
 
     return True, "Contributor is valid"
+
+
+def is_authenticated() -> bool:
+    return state[Ckey.USER_DATA.value] is not None
