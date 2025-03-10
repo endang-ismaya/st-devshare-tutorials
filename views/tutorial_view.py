@@ -80,3 +80,37 @@ def get_tutorials_pagination_view(
         total_pages = (len(tutorials_df) + page_size - 1) // page_size
 
     return paged_df, total_pages
+
+
+def update_tutorial_view(
+    tutorial_id: int,
+    title: str,
+    channel_name: str,
+    video_url: str,
+    brief_description: str,
+) -> Tuple[bool, str]:
+    """Updates a tutorial"""
+
+    tutorial_model = TutorialModel()
+
+    is_valid, msg = validate_adding_tutorial(
+        title,
+        channel_name,
+        tutorial_model,
+    )
+
+    if not is_valid:
+        return False, msg
+
+    is_updated = tutorial_model.update(
+        tutorial_id,
+        title,
+        channel_name,
+        video_url,
+        brief_description,
+    )
+
+    if is_updated:
+        return True, "Tutorial updated successfully!"
+
+    return False, "Something went wrong! Failed to update tutorial."

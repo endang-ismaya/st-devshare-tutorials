@@ -2,6 +2,7 @@ import streamlit as st
 from views.contributor_view import add_contributor_view
 
 st.title("Contributor Registration", anchor=False)
+st.divider()
 
 with st.form("add_contributor_form"):
     username = st.text_input("Username")

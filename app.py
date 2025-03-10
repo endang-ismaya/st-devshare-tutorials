@@ -24,7 +24,8 @@ if all(
         Ckey.PAGE_NUM.value,
         Ckey.USER_DATA.value,
         # Tutorial
-        Ckey.PAGE_NUM.value,
+        Tkey.PAGE_NUM.value,
+        Tkey.SEARCH_TUTORIAL.value,
     )
 ):
     # Contributor
@@ -33,6 +34,7 @@ if all(
 
     # Tutorial
     state[Tkey.PAGE_NUM.value] = 1
+    state[Tkey.SEARCH_TUTORIAL.value] = None
 
 # running page with navigation
 pages_main()

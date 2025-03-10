@@ -6,6 +6,7 @@ from views.contributor_view import update_contributor_view
 from models.contributor import Contributor
 
 st.title(":material/edit_note: Contributor Update", anchor=False)
+st.divider()
 
 user: Contributor = get_user_obj()
 

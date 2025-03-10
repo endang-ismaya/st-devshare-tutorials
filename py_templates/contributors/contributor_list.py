@@ -9,6 +9,7 @@ from models.contributor import ContributorKeys as Ckey
 
 
 st.title(":material/user_attributes: Contributor List", anchor=False)
+st.divider()
 
 page_num = state.get(Ckey.PAGE_NUM.value, 1)
 

@@ -6,6 +6,7 @@ from utils.user_util import get_user_obj
 from views.tutorial_view import add_tutorial_view
 
 st.title(":material/add_circle: Add Tutorial", anchor=False)
+st.divider()
 
 user: Contributor = get_user_obj()
 

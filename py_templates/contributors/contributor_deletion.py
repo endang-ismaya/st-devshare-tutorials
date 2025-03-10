@@ -6,6 +6,7 @@ from views.contributor_view import delete_contributor_view, user_logout
 from models.contributor import Contributor
 
 st.title(":material/delete: Contributor Deletion", anchor=False)
+st.divider()
 
 user: Contributor = get_user_obj()
 

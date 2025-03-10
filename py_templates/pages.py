@@ -56,6 +56,11 @@ def pages_main():
         title="List Tutorial",
         icon=":material/list_alt:",
     )
+    tutorial_edit = st.Page(
+        PY_TEMPLATES_DIR / "tutorials" / "tutorial_edit.py",
+        title="Edit Tutorial",
+        icon=":material/edit_note:",
+    )
 
     page_data = {
         "Homepage": [homepage],
@@ -70,6 +75,7 @@ def pages_main():
         page_data["Manage Contributor"].append(contributor_deletion)
         page_data["Manage Contributor"].remove(contrib_register)
         page_data["Manage Tutorial"].append(tutorial_add)
+        page_data["Manage Tutorial"].append(tutorial_edit)
 
     page = st.navigation(
         page_data,

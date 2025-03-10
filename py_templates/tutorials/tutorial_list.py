@@ -8,6 +8,7 @@ from models.tutorial import TutorialKeys as Tkey
 from views.tutorial_view import get_tutorials_pagination_view
 
 st.title(":material/play_circle: Tutorial List", anchor=False)
+st.divider()
 
 page_num = state.get(Tkey.PAGE_NUM.value, 1)
 

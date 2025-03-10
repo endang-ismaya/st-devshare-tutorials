@@ -1,4 +1,5 @@
 import sqlite3
+from typing import Optional
 import pandas as pd
 from enum import Enum, auto
 
@@ -10,76 +11,7 @@ class TutorialKeys(Enum):
         return f"TUTORIAL__{str(name).upper()}"
 
     PAGE_NUM = auto()
-
-
-class TutorialModel:
-    """Represents a tutorial in the database."""
-
-    def __init__(self):
-        self.db_path = DATABASE_PATH
-        self.conn = sqlite3.connect(self.db_path)
-        self.cursor = self.conn.cursor()
-        self.create_table()
-
-    def create_table(self) -> None:
-        """Creates the 'tutorials' table in the database if it doesn't exist."""
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS tutorials (
-                tutorial_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                title TEXT UNIQUE NOT NULL,
-                channel_name TEXT,
-                video_url TEXT,
-                brief_description TEXT,
-                contributor_id INTEGER,
-                FOREIGN KEY (contributor_id) REFERENCES contributors (id)
-            )
-        """)
-        self.conn.commit()
-
-    def add(
-        self,
-        title: str,
-        channel_name: str,
-        video_url: str,
-        brief_description: str,
-        contributor_id: int,
-    ) -> bool:
-        """Adds a new tutorial to the database."""
-
-        try:
-            self.cursor.execute(
-                """
-                INSERT INTO tutorials (title, channel_name, video_url, brief_description, contributor_id)
-                VALUES (?, ?, ?, ?, ?)
-            """,
-                (title, channel_name, video_url, brief_description, contributor_id),
-            )
-            self.conn.commit()
-            return True
-        except Exception as e:
-            print(f"Error adding tutorial: {e} - {title}")
-            return False
-
-    def title_channel_exists(self, title: str, channel_name: str) -> bool:
-        """Checks if a tutorial with the given title and channel_name exists (case-insensitive)."""
-        self.cursor.execute(
-            """
-            SELECT 1
-            FROM tutorials
-            WHERE LOWER(title) = LOWER(?) AND LOWER(channel_name) = LOWER(?)
-        """,
-            (title.lower(), channel_name.lower()),
-        )
-        result = self.cursor.fetchone()
-        return result is not None
-
-    def get_all(self) -> pd.DataFrame:
-        """Retrieves all tutorials from the database as a pandas DataFrame."""
-        return pd.read_sql_query("SELECT * FROM tutorials", self.conn)
-
-    def __del__(self) -> None:
-        """Closes the database connection when the object is destroyed."""
-        self.conn.close()
+    SEARCH_TUTORIAL = auto()
 
 
 class Tutorial:
@@ -150,3 +82,129 @@ class Tutorial:
     @contributor_id.setter
     def contributor_id(self, contributor_id):
         self._contributor_id = contributor_id
+
+
+class TutorialModel:
+    """Represents a tutorial in the database."""
+
+    def __init__(self):
+        self.db_path = DATABASE_PATH
+        self.conn = sqlite3.connect(self.db_path)
+        self.cursor = self.conn.cursor()
+        self.create_table()
+
+    def create_table(self) -> None:
+        """Creates the 'tutorials' table in the database if it doesn't exist."""
+        self.cursor.execute("""
+            CREATE TABLE IF NOT EXISTS tutorials (
+                tutorial_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT UNIQUE NOT NULL,
+                channel_name TEXT,
+                video_url TEXT,
+                brief_description TEXT,
+                contributor_id INTEGER,
+                FOREIGN KEY (contributor_id) REFERENCES contributors (id)
+            )
+        """)
+        self.conn.commit()
+
+    def add(
+        self,
+        title: str,
+        channel_name: str,
+        video_url: str,
+        brief_description: str,
+        contributor_id: int,
+    ) -> bool:
+        """Adds a new tutorial to the database."""
+
+        try:
+            self.cursor.execute(
+                """
+                INSERT INTO tutorials (title, channel_name, video_url, brief_description, contributor_id)
+                VALUES (?, ?, ?, ?, ?)
+            """,
+                (title, channel_name, video_url, brief_description, contributor_id),
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error adding tutorial: {e} - {title}")
+            return False
+
+    def title_channel_exists(self, title: str, channel_name: str) -> bool:
+        """Checks if a tutorial with the given title and channel_name exists (case-insensitive)."""
+        self.cursor.execute(
+            """
+            SELECT 1
+            FROM tutorials
+            WHERE LOWER(title) = LOWER(?) AND LOWER(channel_name) = LOWER(?)
+        """,
+            (title.lower(), channel_name.lower()),
+        )
+        result = self.cursor.fetchone()
+        return result is not None
+
+    def get_tutorial_by_id(self, tutorial_id: int) -> Optional[Tutorial]:
+        """Retrieves a tutorial object by its ID."""
+        self.cursor.execute(
+            "SELECT * FROM tutorials WHERE tutorial_id = ?", (tutorial_id,)
+        )
+        result = self.cursor.fetchone()
+        if result:
+            (
+                tutorial_id,
+                title,
+                channel_name,
+                video_url,
+                brief_description,
+                contributor_id,
+            ) = result
+            return Tutorial(
+                tutorial_id,
+                title,
+                channel_name,
+                video_url,
+                brief_description,
+                contributor_id,
+            )
+        else:
+            return None
+
+    def update(
+        self,
+        tutorial_id: int,
+        title: str,
+        channel_name: str,
+        video_url: str,
+        brief_description: str,
+    ) -> bool:
+        """Updates an existing tutorial's information."""
+        try:
+            self.cursor.execute(
+                """
+                UPDATE tutorials
+                SET title = ?, channel_name = ?, video_url = ?, brief_description = ?
+                WHERE tutorial_id = ?
+            """,
+                (
+                    title,
+                    channel_name,
+                    video_url,
+                    brief_description,
+                    tutorial_id,
+                ),
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error updating tutorial: {e}")
+            return False
+
+    def get_all(self) -> pd.DataFrame:
+        """Retrieves all tutorials from the database as a pandas DataFrame."""
+        return pd.read_sql_query("SELECT * FROM tutorials", self.conn)
+
+    def __del__(self) -> None:
+        """Closes the database connection when the object is destroyed."""
+        self.conn.close()
