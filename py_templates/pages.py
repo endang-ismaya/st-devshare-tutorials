@@ -57,9 +57,9 @@ def pages_main():
         icon=":material/list_alt:",
     )
     tutorial_edit = st.Page(
-        PY_TEMPLATES_DIR / "tutorials" / "tutorial_edit.py",
-        title="Edit Tutorial",
-        icon=":material/edit_note:",
+        PY_TEMPLATES_DIR / "tutorials" / "tutorial_viewedit.py",
+        title="View/Edit Tutorial",
+        icon=":material/movie_edit:",
     )
 
     page_data = {

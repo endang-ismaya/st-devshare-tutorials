@@ -9,7 +9,7 @@ from models.tutorial import Tutorial, TutorialModel, TutorialKeys as Tkey
 from utils.user_util import get_user_obj
 from views.tutorial_view import update_tutorial_view
 
-st.title(":material/edit_note: Tutorial Edit", anchor=False)
+st.title(":material/movie_edit: View & Edit Tutorial", anchor=False)
 st.divider()
 
 user: Contributor = get_user_obj()
@@ -77,6 +77,7 @@ if tutorial:
         st.write(f"Tutorial ID: {tutorial.tutorial_id}")
         st.write(f"Tutorial Title: {tutorial.title}")
         st.write(f"Channel Name: {tutorial.channel_name}")
+        st.write(f"Description: {tutorial.brief_description}")
         st.divider()
         col1, col2, col3 = st.columns([3, 6, 3])
         col2.video(tutorial.video_url)
