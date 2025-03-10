@@ -28,9 +28,9 @@ st.subheader("How to Contribute:", anchor=False)
 st.write(
     """
     1.  You need to register as a contributor to contribute to the app. Use the "Register" on "Manage Contributor"
+    2.  Login with your credential on the sidebar
     2.  Use the "Add Tutorial" section to submit your favorite YouTube programming tutorials.
-    3.  Provide the tutorial title, channel, playlist (if applicable), and a brief description.
-    4.  Mention your name or email as a contributor to get credit for your submission.
+    3.  Provide the tutorial title, channel, video url or playlist (if applicable), and a brief description.
     """
 )
 
@@ -39,7 +39,7 @@ st.subheader("Explore and Learn:", anchor=False)
 st.write(
     """
     * Browse the "Tutorial List" to find valuable resources.
-    * Use the search functionality to find tutorials on specific topics.
+    * Use the search functionality to find tutorials on specific topics [coming soon].
     """
 )
 
