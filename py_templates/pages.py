@@ -63,13 +63,12 @@ def pages_main():
     )
 
     page_data = {
-        "Homepage": [homepage],
+        "Homepage": [homepage, dashboard],
         "Manage Tutorial": [tutorial_list],
         "Manage Contributor": [contrib_register],
     }
 
     if is_authenticated():
-        page_data["Homepage"].append(dashboard)
         page_data["Manage Contributor"].append(contributor_list)
         page_data["Manage Contributor"].append(contributor_edit)
         page_data["Manage Contributor"].append(contributor_deletion)
