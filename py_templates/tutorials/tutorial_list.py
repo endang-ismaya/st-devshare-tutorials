@@ -1,23 +1,22 @@
 import streamlit as st
 from streamlit import session_state as state
-from views.contributor_callback import (
-    decrease_contributor_page_num,
-    increase_contributor_page_num,
+from views.tutorial_callback import (
+    increase_tutorial_page_num,
+    decrease_tutorial_page_num,
 )
-from views.contributor_view import get_contributors_pagination_view
-from models.contributor import ContributorKeys as Ckey
+from models.tutorial import TutorialKeys as Tkey
+from views.tutorial_view import get_tutorials_pagination_view
 
+st.title(":material/play_circle: Tutorial List", anchor=False)
 
-st.title(":material/user_attributes: Contributor List", anchor=False)
+page_num = state.get(Tkey.PAGE_NUM.value, 1)
 
-page_num = state.get(Ckey.PAGE_NUM.value, 1)
+tutorials_df, total_pages = get_tutorials_pagination_view(page_num)
 
-contributors_df, total_pages = get_contributors_pagination_view(page_num)
-
-if not contributors_df.empty:
+if not tutorials_df.empty:
     # st.dataframe(contributors_df, hide_index=True)
     # display as html table
-    html_table = contributors_df.to_html(escape=False, index=False)
+    html_table = tutorials_df.to_html(escape=False, index=False)
     st.markdown(html_table, unsafe_allow_html=True)
     st.write(f"Page {page_num} of {total_pages}")
 
@@ -26,10 +25,11 @@ if not contributors_df.empty:
     if page_num > 1:
         col1.button(
             "Previous Page",
-            on_click=decrease_contributor_page_num,
+            on_click=increase_tutorial_page_num,
             type="primary",
             use_container_width=True,
             icon=":material/arrow_back_ios:",
+            key="BTN_PREV_PAGE_TUTORIAL_1",
         )
     else:
         col1.button(
@@ -38,15 +38,17 @@ if not contributors_df.empty:
             use_container_width=True,
             disabled=True,
             icon=":material/arrow_back_ios:",
+            key="BTN_PREV_PAGE_TUTORIAL_2",
         )
 
     if page_num < total_pages:
         col2.button(
             "Next Page",
-            on_click=increase_contributor_page_num,
+            on_click=decrease_tutorial_page_num,
             type="primary",
             use_container_width=True,
             icon=":material/arrow_forward_ios:",
+            key="BTN_NEXT_PAGE_TUTORIAL_1",
         )
     else:
         col2.button(
@@ -55,7 +57,8 @@ if not contributors_df.empty:
             use_container_width=True,
             disabled=True,
             icon=":material/arrow_forward_ios:",
+            key="BTN_NEXT_PAGE_TUTORIAL_2",
         )
 
 else:
-    st.warning("No contributors found.")
+    st.warning("No videos found.")

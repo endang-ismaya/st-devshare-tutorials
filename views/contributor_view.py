@@ -53,7 +53,7 @@ def get_contributors_pagination_view(
 
         # Create clickable links
         contributors_df["linkedin_url"] = contributors_df["linkedin_url"].apply(
-            lambda url: f'<a href="{url}" target="_blank">{url}</a>'
+            lambda url: f'<a href="{url}" target="_blank">link</a>'
         )
 
         start_idx = (page_num - 1) * page_size

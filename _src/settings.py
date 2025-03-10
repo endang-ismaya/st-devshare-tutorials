@@ -22,7 +22,7 @@ CONTRIBUTOR_RESERVED_USERNAMES = ["admin", "superuser", "administrator", "root"]
 MAX_NUM_CONTRIBUTOR = 50
 
 # tutorials
-MAX_NUM_TUTORIALS = 2
+MAX_NUM_TUTORIALS = 250
 
 # admin user name
 ADMIN_USER = "endangismaya"

@@ -47,14 +47,19 @@ def pages_main():
 
     # Tutorial
     tutorial_add = st.Page(
-        PY_TEMPLATES_DIR / "tutorials" / "add_tutorial.py",
+        PY_TEMPLATES_DIR / "tutorials" / "tutorial_add.py",
         title="Add Tutorial",
         icon=":material/add_circle:",
+    )
+    tutorial_list = st.Page(
+        PY_TEMPLATES_DIR / "tutorials" / "tutorial_list.py",
+        title="List Tutorial",
+        icon=":material/list_alt:",
     )
 
     page_data = {
         "Homepage": [homepage],
-        "Manage Tutorial": [],
+        "Manage Tutorial": [tutorial_list],
         "Manage Contributor": [contrib_register],
     }
 

@@ -1,7 +1,15 @@
 import sqlite3
 import pandas as pd
+from enum import Enum, auto
 
 from _src.settings import DATABASE_PATH
+
+
+class TutorialKeys(Enum):
+    def _generate_next_value_(name, start, count, last_values):
+        return f"TUTORIAL__{str(name).upper()}"
+
+    PAGE_NUM = auto()
 
 
 class TutorialModel:
