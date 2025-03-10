@@ -3,7 +3,6 @@ import streamlit as st
 
 from streamlit import session_state as state
 from _src.settings import DEBUG, PY_TEMPLATES_DIR
-from models.contributor import ContributorKeys as Ckey
 from utils.user_util import get_user_obj
 from utils.validation import is_authenticated
 from views.contributor_view import user_login, user_logout
