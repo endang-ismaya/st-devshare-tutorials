@@ -171,7 +171,7 @@ class TutorialModel:
         else:
             return None
 
-    def update(
+    def update_by_id(
         self,
         tutorial_id: int,
         title: str,
@@ -199,6 +199,19 @@ class TutorialModel:
             return True
         except Exception as e:
             print(f"Error updating tutorial: {e}")
+            return False
+
+    def delete_by_id(self, tutorial_id: int) -> bool:
+        """Deletes a tutorial from the database."""
+
+        try:
+            self.cursor.execute(
+                "DELETE FROM tutorials WHERE tutorial_id = ?", (tutorial_id,)
+            )
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"Error deleting tutorial: {e}")
             return False
 
     def get_all(self) -> pd.DataFrame:

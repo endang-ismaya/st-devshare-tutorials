@@ -1,9 +1,10 @@
 from typing import Tuple
 import pandas as pd
+from streamlit import session_state as state
 
 from pandas import DataFrame
 from models.contributor import ContributorModel
-from models.tutorial import TutorialModel
+from models.tutorial import TutorialModel, TutorialKeys as Tkey
 from utils.validation import validate_adding_tutorial
 
 
@@ -93,16 +94,7 @@ def update_tutorial_view(
 
     tutorial_model = TutorialModel()
 
-    is_valid, msg = validate_adding_tutorial(
-        title,
-        channel_name,
-        tutorial_model,
-    )
-
-    if not is_valid:
-        return False, msg
-
-    is_updated = tutorial_model.update(
+    is_updated = tutorial_model.update_by_id(
         tutorial_id,
         title,
         channel_name,
@@ -111,6 +103,20 @@ def update_tutorial_view(
     )
 
     if is_updated:
+        state[Tkey.SEARCH_TUTORIAL.value] = None
         return True, "Tutorial updated successfully!"
 
     return False, "Something went wrong! Failed to update tutorial."
+
+
+def delete_tutorial_view(tutorial_id: int) -> Tuple[bool, str]:
+    """Deletes a tutorial by title and displays a success message."""
+    tutorial_model = TutorialModel()
+
+    is_deleted = tutorial_model.delete_by_id(tutorial_id)
+
+    if is_deleted:
+        state[Tkey.SEARCH_TUTORIAL.value] = None
+        return True, "Tutorial has been deleted"
+
+    return False, "Something went wrong! Failed to delete tutorial."
