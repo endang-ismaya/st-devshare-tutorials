@@ -103,6 +103,15 @@ def update_contributor_view(
     contributor_admin: Contributor = contributor_db.get_by_username_object(ADMIN_USER)
 
     if current_contributor_data:
+        # validating username
+        is_valid, msg = validate_username(username)
+        if not is_valid:
+            return False, msg
+
+        # validate password
+        if not validate_password(new_pwd):
+            return (False, "Password invalid. Please follow the criteria")
+
         # check password
         if contributor_db.check_password(
             password=current_pwd, hashed_password=current_contributor_data.hash_password

@@ -61,6 +61,7 @@ def pages_main():
         page_data["Manage Contributor"].append(contributor_list)
         page_data["Manage Contributor"].append(contributor_edit)
         page_data["Manage Contributor"].append(contributor_deletion)
+        page_data["Manage Contributor"].remove(contrib_register)
 
     page = st.navigation(
         page_data,
